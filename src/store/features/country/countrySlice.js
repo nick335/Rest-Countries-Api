@@ -10,13 +10,16 @@ const initialState = {
   darkTheme: false,
   url: 'https://restcountries.com/v2/all',
   width: getWindowSize(),
-  region: ''
+  region: '',
+  countryData: [],
+  error: false,
+  loading: false,
 }
 
 export const fetchCountries = createAsyncThunk('countrySlice/fetchCountries', (url) => {
   return axios
   .get(url)
-  .then((response) => console.log(response))
+  .then((response) => response.data)
 } )
 
 export const countrySlice = createSlice({
@@ -39,6 +42,22 @@ export const countrySlice = createSlice({
       const input = action.payload.target.value
       state.region = input
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCountries.pending, (state) => {
+      state.error = false
+      state.loading =  true 
+    })
+    builder.addCase(fetchCountries.fulfilled, (state, action) => {
+      console.log(action.payload)
+      state.loading = false
+      state.countryData = action.payload
+      state.error = ''
+    })
+    builder.addCase(fetchCountries.rejected, (state, action) => {
+      state.loading = false
+      state.error = true
+    })
   }
 })
 

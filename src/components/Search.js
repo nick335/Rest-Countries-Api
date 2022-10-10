@@ -48,7 +48,7 @@ export default function Search(){
   }, [dispatch]);
 
   return(
-    <section className="flex flex-col w-11/12 mx-auto lg:w-full lg:px-14 xl:px-20 lg:flex-row lg:mx-0 lg:justify-between lg:items-center lg:mt-12">
+    <section className="flex flex-col w-11/12 mx-auto lg:w-full lg:px-14 xl:px-20 lg:flex-row lg:mx-0 lg:justify-between lg:items-center lg:mt-8">
       <div className="flex bg-neutralText dark:bg-darkThemeHeader w-full mx-auto mt-6 mb-7 px-6 py-3 shadow rounded-md lg:mt-0 lg:mb-0 lg:w-2/6 lg:mx-0 lg:py-3.5 trans">
         <div><FontAwesomeIcon  icon={ faMagnifyingGlass } className='mr-5 text-lightInput dark:text-neutralText cursor-pointer trans'/></div>
         <input placeholder="search for country" className="border-none outline-none w-full dark:bg-darkThemeHeader dark:text-neutralText dark:placeholder-neutralText trans"/>
@@ -62,7 +62,6 @@ export default function Search(){
             input={<OutlinedInput />}
             MenuProps={MenuProps}
             inputProps={{ 'aria-label': 'Without label',
-                            backgroundColor: 'red',
                             border: 'none',
           }}
           >
