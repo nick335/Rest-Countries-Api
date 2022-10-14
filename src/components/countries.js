@@ -6,7 +6,40 @@ import CountrySkeleton from "./countrySkeleton"
 
 
 export default function Countries(){
-  const { countryData, loading  } = useSelector(state => state.country)
+  const { countryData, loading, region, regionSelected, searchInput, searching  } = useSelector(state => state.country)
+
+  const searchedCountries = countryData.map(each => {
+    const name = each.name.toLowerCase()
+    const input = searchInput.toLowerCase()
+
+    if( name.includes(input) ){
+      return <Country 
+                flag = {each.flag}
+                name = {each.name}
+                population = {each.population}
+                region = {each.region}
+                capital = {each.capital}
+                key = { nanoid() }
+              />
+    }
+
+    return null;
+  })
+
+  const selectedRegionCountries = countryData.map(each => {
+    if(each.region === region){
+      return <Country 
+                flag = {each.flag}
+                name = {each.name}
+                population = {each.population}
+                region = {each.region}
+                capital = {each.capital}
+                key = { nanoid() }
+              />
+    }
+
+    return null;
+  })
 
   const countries = countryData.map(each => {
     return <Country 
@@ -24,9 +57,12 @@ export default function Countries(){
     
   }
   return(
-    <section className="mt-12 pb-5 sm:w-11/12  sm:mx-auto lg:w-fit lg:mx-14 xl:mx-20">
-      <div className="sm:flex flex-wrap sm:justify-around lg:justify-between ">
-        { loading ? countryskeleton : countries }
+    <section className="mt-12 pb-5 sm:w-11/12  sm:mx-auto lg:w-auto lg:mx-14 xl:mx-20">
+      <div className="sm:flex flex-wrap sm:justify-around  lg:justify-between ">
+        { loading ? countryskeleton : 
+          regionSelected ? selectedRegionCountries :
+          searching ? searchedCountries :
+        countries }
       </div>
     </section>
   )

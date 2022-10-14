@@ -10,8 +10,11 @@ const initialState = {
   darkTheme: false,
   url: 'https://restcountries.com/v2/all',
   width: getWindowSize(),
-  region: '',
+  region: 'all',
   countryData: [],
+  regionSelected: false,
+  searching: false,
+  searchInput: '',
   error: false,
   loading: false,
 }
@@ -39,8 +42,34 @@ export const countrySlice = createSlice({
       state.width = getWindowSize()
     },
     selectRegion: (state, action) => {
+      if(state.searching){
+        state.searching = false
+        state.searchInput = ''
+      }
       const input = action.payload.target.value
-      state.region = input
+      if( state.region !== input ){
+        if(input === 'all'){
+          state.regionSelected = false
+          state.region = input
+        }else{
+          state.regionSelected= true
+          state.region = input
+        }
+      }
+    },
+    handleSearch:(state, action) => {
+      if(state.regionSelected){
+        state.regionSelected = false
+        state.region = 'all'
+      }
+      const input = action.payload.target.value
+      state.searchInput = input
+
+      if(state.searchInput){
+        state.searching = true
+      }else{
+        state.searching = false
+      }
     }
   },
   extraReducers: (builder) => {
@@ -62,4 +91,4 @@ export const countrySlice = createSlice({
 })
 
 export default countrySlice.reducer
-export const { handleTheme, handleResize, selectRegion } = countrySlice.actions
+export const { handleTheme, handleResize, selectRegion, handleSearch } = countrySlice.actions

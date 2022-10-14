@@ -2,15 +2,17 @@ import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { fetchCountries } from "../store/features/country/countrySlice"
 import Nav from "./nav"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom"
 import HomePage from "./HomePage"
 import CountryDetails from "./countryDetails"
 import { nanoid } from "nanoid"
+import { AnimatePresence } from "framer-motion"
 
 export default function PageTemplate(){ 
 
   const { darkTheme, url, countryData } = useSelector( state => state.country)
   const dispatch = useDispatch()
+  const location = useLocation()
 
   const routeElements = countryData.map(each => {
     return <Route path={`/${each.name }`} key= {nanoid()}
@@ -37,10 +39,13 @@ export default function PageTemplate(){
   return(
     <div className={`${darkTheme && 'dark' } bg-lightThemeBg dark:bg-darkThemeBg min-h-screen h-full w-full trans`}>
       <Nav />
-      <Routes>
-        <Route path="/" element={ <HomePage /> } />
-        {routeElements}
-      </Routes>
+      <AnimatePresence>
+        <Routes location={ location } key={ location.pathname } >
+          <Route path="/" element={ <HomePage /> } />
+          {routeElements}
+        </Routes>
+      </AnimatePresence>
+      
     </div>
   )
 }
