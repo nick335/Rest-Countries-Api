@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom"
+import { motion } from "framer-motion"
+
 
 export default function Country(props){
   const population = props.population.toLocaleString()
   return(
-    <div className="trans bg-neutralText w-3/4 mx-auto shadow-lg rounded-md mb-14 dark:bg-darkThemeHeader sm:w-64 sm:mx-0">
+    <motion.div whileHover={{ scale:1.1 }}  className="trans bg-neutralText w-3/4 mx-auto shadow-lg rounded-md mb-14 dark:bg-darkThemeHeader sm:w-64 sm:mx-0">
       <div className="w-full">
         <Link to={`/${props.name}`}>
           <img src={ props.flag } alt="country-img" className="rounded-t-md h-44 w-full object-cover cursor-pointer"/>
@@ -28,6 +30,6 @@ export default function Country(props){
           <p className="text-sm font-light pl-1 text-lightThemeText dark:text-neutralText trans">{ props.capital }</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
