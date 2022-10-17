@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { nanoid } from "nanoid"
 import { motion } from "framer-motion"
 
 
 export default function CountryDetails(props){
+  const navigate = useNavigate();
   const Languages = props.languages
   //gettting the languages from Languages object
   let renderLanguages = []
@@ -35,9 +36,10 @@ export default function CountryDetails(props){
   const borderelements = []
   if(borders){
    const borderelement = countryData.map(each => {
+    const routeName = each.name.replace(/ /g,'')
     const potentialBorder = each.alpha3Code
     if( borders.includes(potentialBorder) ){
-      return <motion.h4 initial={{ y:30, opacity:0 }} whileInView ={{ y:0, opacity:1 }} transition={{ duration:0.4, delay:0.4 }} viewport = {{ once: true }} className="trans bg-neutralText text-lightThemeText dark:text-neutralText dark:bg-darkThemeHeader shadow-1g px-6 py-1.5  rounded-md text-sm font-light w-fit mr-1.5 mb-2 " key={ nanoid() }>{ each.name }</motion.h4>
+      return <Link to = {`/${routeName}`} key={ nanoid() } > <motion.h4 initial={{ y:30, opacity:0 }} whileInView ={{ y:0, opacity:1 }} transition={{ duration:0.4, delay:0.4 }} viewport = {{ once: true }} className="trans bg-neutralText text-lightThemeText dark:text-neutralText dark:bg-darkThemeHeader shadow-1g px-6 py-1.5  rounded-md text-sm font-light w-fit mr-1.5 mb-2 " >{ each.name }</motion.h4> </Link>
     }
 
     return null;
@@ -48,6 +50,8 @@ export default function CountryDetails(props){
   
   //  adding commas to population number
   const population = props.population.toLocaleString()
+
+  //navigating
   return (
     <motion.div
         initial={{ opacity:0 }}
@@ -56,9 +60,7 @@ export default function CountryDetails(props){
     >
         <section className="mx-auto w-5/6 mt-8 lg:w-full lg:mx-0 lg:px-14 xl:px-20">
           <div className="w-fit">
-            <Link to='/'>
-              <motion.h3 initial={{ y:50, opacity:0 }} whileInView ={{ y:0, opacity:1 }} transition = {{ duration: 0.5}} viewport = {{ once: true }} className="trans bg-neutralText text-lightThemeText dark:text-neutralText dark:bg-darkThemeHeader shadow-md px-6 py-1 pt-1.5 rounded-md text-base font-semibold"><FontAwesomeIcon icon={ faArrowLeftLong } className='mr-1.5' /> Back</motion.h3>
-            </Link>
+              <motion.h3 initial={{ y:50, opacity:0 }} whileInView ={{ y:0, opacity:1 }} transition = {{ duration: 0.5}} viewport = {{ once: true }} onClick = {() => navigate(-1)} className="trans bg-neutralText text-lightThemeText dark:text-neutralText dark:bg-darkThemeHeader shadow-md px-6 py-1 pt-1.5 rounded-md text-base font-semibold cursor-pointer"><FontAwesomeIcon icon={ faArrowLeftLong } className='mr-1.5' /> Back</motion.h3>
           </div>
           <div className="mt-12 lg:flex lg:items-center">
             <div className="lg:w-1/2">

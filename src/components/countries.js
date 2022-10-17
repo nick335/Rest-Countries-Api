@@ -53,7 +53,7 @@ export default function Countries(){
   })
   let countryskeleton = []
   for (let i = 0; i < 250; i++) {
-    countryskeleton.push( <CountrySkeleton /> )
+    countryskeleton.push( <CountrySkeleton key={ nanoid() } /> )
     
   }
   return(

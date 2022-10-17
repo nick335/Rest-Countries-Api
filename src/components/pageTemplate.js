@@ -15,7 +15,8 @@ export default function PageTemplate(){
   const location = useLocation()
 
   const routeElements = countryData.map(each => {
-    return <Route path={`/${each.name }`} key= {nanoid()}
+    const routeName = each.name.replace(/ /g,'')
+    return <Route path={`/${routeName}`} key= {nanoid()}
     element = { <CountryDetails 
                 flag = {each.flag}
                 name = {each.name}
