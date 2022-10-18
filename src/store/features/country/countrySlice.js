@@ -78,10 +78,9 @@ export const countrySlice = createSlice({
       state.loading =  true 
     })
     builder.addCase(fetchCountries.fulfilled, (state, action) => {
-      console.log(action.payload)
       state.loading = false
       state.countryData = action.payload
-      state.error = ''
+      state.error = false
     })
     builder.addCase(fetchCountries.rejected, (state, action) => {
       state.loading = false
